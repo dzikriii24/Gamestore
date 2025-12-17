@@ -1,0 +1,25 @@
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Laravel
+backend/storage/
+backend/bootstrap/cache/
+backend/.env
+backend/.env.*
+!backend/.env.production
+
+# React
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
