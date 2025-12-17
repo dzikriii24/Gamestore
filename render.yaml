@@ -9,17 +9,15 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
+        value: "false"
       - key: APP_URL
-        fromService:
-          name: game-store-backend
-          type: web
-          property: url
+        value: https://game-store-backend.onrender.com  # URL hardcode dulu
       - key: LOG_CHANNEL
         value: stderr
       - key: DB_CONNECTION
         value: pgsql
-      - fromDatabase:
+      - key: DATABASE_URL  # Render akan auto inject connection string
+        fromDatabase:
           name: gamedb
           property: connectionString
       # Cache & Session
@@ -31,14 +29,16 @@ services:
         value: sync
       # Laravel Sanctum
       - key: SANCTUM_STATEFUL_DOMAINS
-        value: "*"  # Untuk development, di production ganti dengan domain frontend
+        value: ".onrender.com"
       - key: SESSION_DOMAIN
         value: ".onrender.com"
     healthCheckPath: /api/games
     autoDeploy: true
     scaling:
       minInstances: 1
-      maxInstances: 1
+      maxInstances: 2
+      targetCPUPercent: 70
+      targetMemoryPercent: 70
 
 databases:
   - name: gamedb
