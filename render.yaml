@@ -31,41 +31,17 @@ services:
         value: sync
       # Laravel Sanctum
       - key: SANCTUM_STATEFUL_DOMAINS
-        generateValue: true
+        value: "*"  # Untuk development, di production ganti dengan domain frontend
       - key: SESSION_DOMAIN
-        generateValue: true
+        value: ".onrender.com"
     healthCheckPath: /api/games
     autoDeploy: true
     scaling:
       minInstances: 1
       maxInstances: 1
 
-  # React Frontend Static Site
-  - type: static_site
-    name: game-store-frontend
-    buildCommand: |
-      cd frontend
-      npm ci
-      npm run build
-    publishPath: ./frontend/dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          name: game-store-backend
-          type: web
-          property: url
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=3600
-    autoDeploy: true
-
 databases:
   - name: gamedb
     databaseName: game_store
     plan: free
-    region: singapore  # Pilih region terdekat
+    region: singapore
