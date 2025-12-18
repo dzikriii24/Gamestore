@@ -1,11 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import axios from 'axios';
 
 const GameContext = createContext();
 
 export const useGameContext = () => useContext(GameContext);
 
 const API_BASE = 'http://127.0.0.1:8000/api';
+
 
 // Helper function untuk parse tags
 const parseTags = (tags) => {
